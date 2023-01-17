@@ -1,7 +1,7 @@
-let mix = require('laravel-mix'),
-    build = require('./cleaver.build.js'),
-    command = require('node-cmd')
-    path = require('path');
+let mix = require('laravel-mix');
+let build = require('./cleaver.build.js');
+let command = require('node-cmd');
+let path = require('path');
 
 mix.disableNotifications()
     .webpackConfig({
@@ -20,14 +20,15 @@ mix.disableNotifications()
     .options({
         processCssUrls: false
     })
-    .version()
-    .browserSync({
+    .version();
+
+    mix.browserSync({
         files: [
             "dist/**/*",
             {
                 match: ["resources/**/*"],
                 fn: function(event, file) {
-                    command.get('php cleaver build', (error, stdout, stderr) => {
+                    command.run('php cleaver build', (error, stdout, stderr) => {
                         console.log(error ? stderr : stdout);
                     });
                 }
